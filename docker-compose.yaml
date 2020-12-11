@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  git:
+    image: rurumimic/git-server-docker:latest
+    restart: always
+    container_name: git
+    ports:
+    - '2222:22'
+    volumes:
+    - ~/git/keys:/git/keys
+    - ~/git/repos:/git/repos

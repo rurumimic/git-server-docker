@@ -1,28 +1,29 @@
-FROM alpine:3.4
-
-MAINTAINER Carlos Bernárdez "carlos@z4studios.com"
+FROM alpine:3.12
 
 # "--no-cache" is new in Alpine 3.3 and it avoid using
 # "--update + rm -rf /var/cache/apk/*" (to remove cache)
 RUN apk add --no-cache \
-# openssh=7.2_p2-r1 \
+# openssh=8.3_p1-r0 \
   openssh \
-# git=2.8.3-r0
+# git=2.26.2-r0
   git
 
 # Key generation on the server
+# ssh-keygen: generating new host keys: RSA DSA ECDSA ED25519
 RUN ssh-keygen -A
 
 # SSH autorun
 # RUN rc-update add sshd
 
-WORKDIR /git-server/
+WORKDIR /git
 
 # -D flag avoids password generation
 # -s flag changes user's shell
-RUN mkdir /git-server/keys \
-  && adduser -D -s /usr/bin/git-shell git \
+# git:x:1000:1000:Linux User,,,:/home/git:/usr/bin/git-shell
+# and unlock user by setting a password
+RUN adduser -D -s /usr/bin/git-shell git \
   && echo git:12345 | chpasswd \
+  && mkdir /git/keys /git/repos \
   && mkdir /home/git/.ssh
 
 # This is a login shell for SSH accounts to provide restricted Git access.
