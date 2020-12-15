@@ -31,7 +31,7 @@ RUN adduser -D -s /usr/bin/git-shell git \
 # pull/push functionality, plus custom commands present in a subdirectory
 # named git-shell-commands in the user’s home directory.
 # More info: https://git-scm.com/docs/git-shell
-COPY git-shell-commands /home/git/git-shell-commands
+COPY --chown=git:git git-shell-commands /home/git/git-shell-commands
 
 # sshd_config file is edited for enable access key and disable access password
 COPY sshd_config /etc/ssh/sshd_config

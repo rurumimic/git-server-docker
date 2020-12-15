@@ -17,7 +17,6 @@ spec:
       containers:
         - name: git
           image: rurumimic/git-server-docker:latest
-          imagePullPolicy: Never
           ports:
           - containerPort: 22
           volumeMounts:
